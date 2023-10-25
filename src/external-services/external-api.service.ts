@@ -1,16 +1,16 @@
 import { Injectable } from '@nestjs/common';
 import { ShipmentExternalApiResponse } from 'src/types';
-// import axios from 'axios';
-// import { ShipmentExternalApiResponse } from 'src/types';
-
-// const apiUrl = process.env.EXTERNAL_API || '';
+import axios from 'axios';
 
 @Injectable()
 export class ExternalApiService {
   async fetchShipmentFromExternalApi(): Promise<ShipmentExternalApiResponse> {
-    // const response = await axios.get<ShipmentExternalApiResponse>(apiUrl);
-    // return response.data;
-    return tmpResponse;
+    const apiUrl = process.env.EXTERNAL_API || '';
+    const response = await axios.get<ShipmentExternalApiResponse>(apiUrl, {
+      headers: { Authorization: process.env.API_TOKEN },
+    });
+    return response.data;
+    // return tmpResponse;
   }
 }
 
