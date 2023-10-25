@@ -7,7 +7,7 @@ export class ExternalApiService {
   async fetchShipmentFromExternalApi(): Promise<ShipmentExternalApiResponse> {
     const apiUrl = process.env.EXTERNAL_API || '';
     const response = await axios.get<ShipmentExternalApiResponse>(apiUrl, {
-      headers: { Authorization: process.env.API_TOKEN },
+      headers: { Authorization: `Bearer ${process.env.API_TOKEN}` },
     });
     return response.data;
     // return tmpResponse;
