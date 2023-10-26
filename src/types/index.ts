@@ -1,5 +1,19 @@
 type ISOStringDate = string;
 
+type StringFilterOperator = '$eq' | '$contains' | '$startsWith';
+
+type StringFilter = Partial<{
+  [key in StringFilterOperator]: string;
+}>;
+
+export interface ShipmentExternalApiFilters {
+  reference: StringFilter;
+  portOfLoading: StringFilter;
+  portOfDischarge: StringFilter;
+  houseBillNumber: StringFilter;
+  createdAt: { $gte: ISOStringDate; $lte: ISOStringDate };
+}
+
 export interface ShipmentExternalApi {
   id: number;
   attributes: {

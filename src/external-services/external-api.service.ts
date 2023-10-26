@@ -1,16 +1,26 @@
-import { Injectable } from '@nestjs/common';
-import { ShipmentExternalApiResponse } from 'src/types';
+import { HttpException, Injectable } from '@nestjs/common';
+import {
+  ShipmentExternalApiFilters,
+  ShipmentExternalApiResponse,
+} from 'src/types';
 import axios from 'axios';
 
 @Injectable()
 export class ExternalApiService {
-  async fetchShipmentFromExternalApi(): Promise<ShipmentExternalApiResponse> {
+  async fetchShipmentFromExternalApi(
+    filters: Partial<ShipmentExternalApiFilters>,
+  ): Promise<ShipmentExternalApiResponse> {
     const apiUrl = process.env.EXTERNAL_API || '';
-    const response = await axios.get<ShipmentExternalApiResponse>(apiUrl, {
-      headers: { Authorization: `Bearer ${process.env.API_TOKEN}` },
-    });
-    return response.data;
-    // return tmpResponse;
+    console.log('filters sent to external api:', filters);
+    try {
+      const response = await axios.get<ShipmentExternalApiResponse>(apiUrl, {
+        headers: { Authorization: `Bearer ${process.env.API_TOKEN}` },
+      });
+      return response.data;
+    } catch (e) {
+      throw new HttpException('Internal Server Error', 500);
+    }
+    return tmpResponse;
   }
 }
 

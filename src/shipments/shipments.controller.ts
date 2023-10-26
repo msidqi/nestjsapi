@@ -8,9 +8,8 @@ export class ShipmentsController {
   constructor(private readonly shipmentService: ShipmentsService) {}
   @Post()
   getShipment(
-    @Body() createCatDto: GetConsolidationShipmentDTO,
+    @Body() getShipmentDTO: GetConsolidationShipmentDTO,
   ): Promise<Shipment[]> {
-    console.log(createCatDto);
-    return this.shipmentService.getShipment();
+    return this.shipmentService.getShipment(getShipmentDTO.filters);
   }
 }
