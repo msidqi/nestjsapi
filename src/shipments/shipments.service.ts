@@ -1,9 +1,13 @@
-import { Injectable } from '@nestjs/common';
-// import { plainToInstance } from 'class-transformer';
+import { HttpException, Injectable } from '@nestjs/common';
+import { plainToInstance } from 'class-transformer';
+import { validateOrReject } from 'class-validator';
 import { ExternalApiService } from 'src/external-services/external-api.service';
 import { ShipmentTransformationService } from 'src/external-services/shipments-transformation.service';
 import { Shipment } from 'src/types';
-import { GetConsolidationShipmentDTO } from './dto/get-shipments.dto';
+import {
+  GetConsolidationShipmentDTO,
+  GetExternalShipmentDTO,
+} from './dto/get-shipments.dto';
 
 @Injectable()
 export class ShipmentsService {
@@ -24,12 +28,16 @@ export class ShipmentsService {
         transformedFilters,
       );
 
-    // plainToInstance(shipmentData.data)
-    // @TODO: validate shipmentData
-    const transformedData =
-      this.shipmentTransformationService.transformShipment(shipmentData);
+    // validate external api data
+    const responseData = plainToInstance(GetExternalShipmentDTO, shipmentData);
+    try {
+      await validateOrReject(responseData);
+    } catch (e) {
+      throw new HttpException('Internal Server Error', 500);
+    }
 
-    console.log('transformedData', transformedData);
-    return transformedData;
+    return this.shipmentTransformationService.transformShipment(
+      responseData.data,
+    );
   }
 }

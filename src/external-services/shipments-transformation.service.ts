@@ -1,15 +1,16 @@
 import { Injectable } from '@nestjs/common';
-import { GetConsolidationShipmentDTO } from 'src/shipments/dto/get-shipments.dto';
 import {
-  Shipment,
-  ShipmentExternalApiFilters,
-  ShipmentExternalApiResponse,
-} from 'src/types';
+  GetConsolidationShipmentDTO,
+  GetExternalShipmentDTO,
+} from 'src/shipments/dto/get-shipments.dto';
+import { Shipment, ShipmentExternalApiFilters } from 'src/types';
 
 @Injectable()
 export class ShipmentTransformationService {
-  transformShipment(shipmentResponse: ShipmentExternalApiResponse): Shipment[] {
-    return shipmentResponse.data.map((shipment) => ({
+  transformShipment(
+    shipmentResponse: GetExternalShipmentDTO['data'],
+  ): Shipment[] {
+    return shipmentResponse.map((shipment) => ({
       reference: shipment.attributes.reference,
       origin: shipment.attributes.portOfLoading,
       destination: shipment.attributes.portOfDischarge,

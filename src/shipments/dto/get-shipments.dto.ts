@@ -4,6 +4,8 @@ import {
   IsOptional,
   IsIn,
   IsDateString,
+  IsArray,
+  IsNumber,
 } from 'class-validator';
 import { Type } from 'class-transformer';
 
@@ -74,4 +76,59 @@ export class ShipmentDTO {
   @IsDateString()
   createdAt: string;
   // createdAt: Date;
+}
+
+export class GetExternalShipmentDTO {
+  @IsArray()
+  @Type(() => ExternalShipmentData)
+  @ValidateNested({ each: true })
+  data: ExternalShipmentData[];
+
+  @Type(() => ExternalShipmentMetaData)
+  @ValidateNested()
+  meta: ExternalShipmentMetaData[];
+}
+
+export class ExternalShipment {
+  @IsString()
+  reference: string;
+
+  @IsString()
+  portOfLoading: string;
+
+  @IsString()
+  portOfDischarge: string;
+
+  @IsOptional()
+  @IsString()
+  houseBillNumber: string;
+
+  @IsDateString()
+  createdAt: string;
+}
+
+class ExternalShipmentData {
+  @Type(() => ExternalShipment)
+  @ValidateNested()
+  attributes: ExternalShipment;
+}
+
+class ExternalShipmentPagination {
+  @IsNumber()
+  page: number;
+
+  @IsNumber()
+  pageSize: number;
+
+  @IsNumber()
+  pageCount: number;
+
+  @IsNumber()
+  total: number;
+}
+
+export class ExternalShipmentMetaData {
+  @Type(() => ExternalShipmentPagination)
+  @ValidateNested()
+  pagination: ExternalShipmentPagination;
 }
