@@ -25,6 +25,7 @@ export class ShipmentsService {
       );
 
     // plainToInstance(shipmentData.data)
+    // @TODO: validate shipmentData
     const transformedData =
       this.shipmentTransformationService.transformShipment(shipmentData);
 
