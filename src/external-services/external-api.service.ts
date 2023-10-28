@@ -1,9 +1,6 @@
 import { HttpException, Injectable } from '@nestjs/common';
-import {
-  ShipmentExternalApiFilters,
-  ShipmentExternalApiResponse,
-} from 'src/types';
 import axios from 'axios';
+import { ShipmentExternalApiFilters, ShipmentExternalApiResponse } from 'types';
 
 @Injectable()
 export class ExternalApiService {

@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import {
   GetConsolidationShipmentDTO,
   GetExternalShipmentDTO,
-} from 'src/shipments/dto/get-shipments.dto';
-import { Shipment, ShipmentExternalApiFilters } from 'src/types';
+} from 'shipments/dto/get-shipments.dto';
+import { Shipment, ShipmentExternalApiFilters } from 'types';
 
 @Injectable()
 export class ShipmentTransformationService {
@@ -50,8 +50,8 @@ export class ShipmentTransformationService {
       }),
       ...(getShipmentFilters.createdAt && {
         createdAt: {
-          $gte: getShipmentFilters.createdAt.to,
-          $lte: getShipmentFilters.createdAt.from,
+          $gte: getShipmentFilters.createdAt.from,
+          $lte: getShipmentFilters.createdAt.to,
         },
       }),
     };

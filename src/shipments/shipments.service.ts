@@ -1,13 +1,13 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
-import { ExternalApiService } from 'src/external-services/external-api.service';
-import { ShipmentTransformationService } from 'src/external-services/shipments-transformation.service';
-import { Shipment } from 'src/types';
+import { ExternalApiService } from 'external-services/external-api.service';
+import { ShipmentTransformationService } from 'external-services/shipments-transformation.service';
+import { Shipment } from 'types';
 import {
   GetConsolidationShipmentDTO,
   GetExternalShipmentDTO,
-} from './dto/get-shipments.dto';
+} from 'shipments/dto/get-shipments.dto';
 
 @Injectable()
 export class ShipmentsService {
@@ -19,7 +19,6 @@ export class ShipmentsService {
   async getShipment(
     getShipmentFilters: GetConsolidationShipmentDTO['filters'],
   ): Promise<Shipment[]> {
-    console.log(getShipmentFilters);
     const transformedFilters =
       this.shipmentTransformationService.transformFilters(getShipmentFilters);
 
@@ -30,9 +29,11 @@ export class ShipmentsService {
 
     // validate external api data
     const responseData = plainToInstance(GetExternalShipmentDTO, shipmentData);
+
     try {
       await validateOrReject(responseData);
     } catch (e) {
+      // invalid remote api response
       throw new HttpException('Internal Server Error', 500);
     }
 
