@@ -2,8 +2,8 @@ import { Injectable } from '@nestjs/common';
 import {
   GetConsolidationShipmentDTO,
   GetExternalShipmentDTO,
-} from 'shipments/dto/get-shipments.dto';
-import { Shipment, ShipmentExternalApiFilters } from 'types';
+} from '../shipments/dto/get-shipments.dto';
+import { Shipment, ShipmentExternalApiFilters } from '../types';
 
 @Injectable()
 export class ShipmentTransformationService {

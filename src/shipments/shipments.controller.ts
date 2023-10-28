@@ -1,7 +1,7 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { ShipmentsService } from 'shipments/shipments.service';
-import { GetConsolidationShipmentDTO } from 'shipments/dto/get-shipments.dto';
-import { Shipment } from 'types';
+import { ShipmentsService } from '../shipments/shipments.service';
+import { GetConsolidationShipmentDTO } from '../shipments/dto/get-shipments.dto';
+import { Shipment } from '../types';
 
 @Controller('consolidation/shipments')
 export class ShipmentsController {

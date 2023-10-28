@@ -1,13 +1,13 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { plainToInstance } from 'class-transformer';
 import { validateOrReject } from 'class-validator';
-import { ExternalApiService } from 'external-services/external-api.service';
-import { ShipmentTransformationService } from 'external-services/shipments-transformation.service';
-import { Shipment } from 'types';
+import { ExternalApiService } from '../external-services/external-api.service';
+import { ShipmentTransformationService } from '../external-services/shipments-transformation.service';
+import { Shipment } from '../types';
 import {
   GetConsolidationShipmentDTO,
   GetExternalShipmentDTO,
-} from 'shipments/dto/get-shipments.dto';
+} from '../shipments/dto/get-shipments.dto';
 
 @Injectable()
 export class ShipmentsService {

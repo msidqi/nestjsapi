@@ -12,10 +12,8 @@ import { Type } from 'class-transformer';
 class DateRangeFilterArg {
   @IsDateString()
   from: string;
-  // from: Date;
   @IsDateString()
   to: string;
-  // to: Date;
 }
 
 class StringFilterArg {
@@ -101,7 +99,7 @@ export class ExternalShipment {
 
   @IsOptional()
   @IsString()
-  houseBillNumber: string;
+  houseBillNumber: string | null;
 
   @IsDateString()
   createdAt: string;
